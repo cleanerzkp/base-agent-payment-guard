@@ -17,17 +17,20 @@ and replay controls on Base.
    from owner to merchant.
 6. The contract emits a deterministic payment receipt for indexing and grant
    impact measurement.
-7. The web app provides a no-wallet policy simulator. Its optional injected
-   wallet check confirms a supported account/network only; it never requests a
-   transaction in this MVP.
+7. The web app provides a synthetic policy simulator and an injected-wallet
+   boundary for the verified Base Sepolia deployment.
+8. The wallet workbench reads one consistent onchain snapshot, simulates the
+   exact request at a fresh verified block, displays its full signing intent,
+   and asks the wallet to sign only after explicit confirmation.
 
 ## Public seams
 
 - `BaseAgentPaymentGuard`: contract policy, merchant, payment, and receipt API.
 - `@base-agent-payment-guard/sdk`: pure preflight, ABI transaction builders,
   trusted-RPC receipt verification, and domain-bound aggregate metrics.
-- `@base-agent-payment-guard/web`: browser demo and optional wallet-readiness
-  check. Transaction signing is a future, separately reviewed surface.
+- `@base-agent-payment-guard/web`: browser simulator and injected-wallet
+  boundary. The wallet workbench and public host remain separately reviewed
+  release surfaces until observed.
 
 ## Explicit non-goals
 
@@ -40,7 +43,16 @@ and replay controls on Base.
 
 ## Grant gate
 
-The local MVP is not eligible for the pasted live-product intake. Eligibility
-requires a public product, verified Base mainnet contract, Builder Code, Loom,
-real users, measured usage and volume, revenue truth, and a defensible
-Base-exclusive operating statement.
+The official 1-5 ETH Builder Grant nomination explicitly accepts a Base testnet
+project. The verified Sepolia contract satisfies that onchain selection, but
+the nomination still needs a public project URL, project and builder X and
+Farcaster profiles, a truthful case of at most 150 words, a one-minute demo,
+and explicit review of the form's media license and privacy terms. The public
+Builder Code `bc_xiu880fh` is registered and integrated into wallet transaction
+intents, but an attributed transaction remains pending. Mainnet, usage, and
+revenue can strengthen later evidence, but the official nomination form does
+not list them as required fields.
+
+The separate pasted up-to-$5,000 live-product intake remains unauthenticated.
+Do not submit it or reuse its stronger live-product claims without a verified
+official source and observed usage evidence.

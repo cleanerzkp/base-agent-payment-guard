@@ -4,53 +4,75 @@ Status date: 2026-08-12
 
 ## Current verdict
 
-Do not submit the pasted up-to-$5,000 live-product form yet. Its exact URL has
-not been authenticated through an official Base or Coinbase source, and the
-project does not yet have the evidence the form requests.
+Do not submit yet. Use the official Base Builder Grant nomination path, not the
+pasted up-to-$5,000 live-product intake.
 
-The current public Base funding documentation describes a different Builder
-Grant path: 1-5 ETH, retroactive, for shipped projects. It explicitly welcomes
-prototypes in Builder Rewards. The safe sequence is prototype, public release,
-real usage, then a retroactive application.
+Base's current funding documentation describes retroactive Builder Grants of
+1-5 ETH. Its official article links to a Coinbase-owned nomination form. That
+form explicitly accepts `No - live on Base testnet`, so a mainnet deployment is
+not a form prerequisite. It requires a project URL, project and builder X and
+Farcaster identities, a grant case of at most 150 words, and a one-minute demo.
+
+The project now has a verified Base Sepolia contract. A public browser release,
+the required social identities, the demo, and the user's review of the form's
+license and privacy terms remain open. The public Builder Code `bc_xiu880fh` is
+registered and integrated into reviewed wallet transaction intents, but its
+first attributed transaction remains unobserved. The up-to-$5,000 intake has
+not been authenticated through an official Base or Coinbase source and requests
+a different live-product evidence set.
 
 ## Evidence matrix
 
-| Form requirement | Current evidence | Gate |
+| Official nomination requirement | Current evidence | Gate |
 | --- | --- | --- |
-| Exclusively building on Base | Clean Base-only repository and design | Keep all deployed product surfaces Base-only |
-| Past idea stage | Local contract, SDK, app, and tests when gates pass | Preserve reproducible test and build reports |
-| Live product | Missing | Publish an approved production URL |
-| Product demo (Loom) | Missing | Record the deployed owner and agent flows |
-| Base contract address | Missing | Audit, deploy, verify source on Base mainnet |
-| Users, DAU, WAU | Missing | Recruit real pilots and define metric queries |
-| All-time and 30-day volume | Missing | Derive from domain-bound verifier output; disclose RPC trust, confirmation, Sybil, and same-controller limits |
-| Revenue today | Zero | State zero until actual revenue exists |
-| Three-month GTM evidence | Plan only | Secure named pilot commitments and weekly reporting |
-| Base Builder Code | Missing | Register the live app on Base.dev and integrate attribution |
-| Team and ownership | Solo independent project | Publish ownership and prior-work statement |
+| Email and nominator name | Personal values intentionally absent from the repository | User supplies them only in the authenticated form |
+| Project name | Base Agent Payment Guard | Keep the same name across repository, app, demo, and social profiles |
+| Project URL | Public repository exists; public browser URL is missing | Publish and independently verify the static app before nomination |
+| Project X | Missing | User creates or confirms the official project profile |
+| Project Farcaster/channel | Missing | User creates or confirms the official project channel |
+| Builder X | Missing | User confirms the builder profile |
+| Builder Farcaster | Missing | User confirms the builder profile |
+| Base deployment state | Verified Base Sepolia deployment | Select `No - live on Base testnet`; do not select mainnet |
+| Builder Code | Public code `bc_xiu880fh` registered and integrated into reviewed intents | Record the first attributed transaction separately |
+| Why it deserves a grant | Truthful draft under 150 words | Recheck against the public release before submission |
+| One-minute demo | Missing | Record the observed public app and verified testnet contract |
+| Media license confirmation | Explicit user decision required | User reviews ownership and the non-exclusive, worldwide, irrevocable license before checking |
+| Privacy acknowledgement | Explicit user review required | Never enter secrets, account data, passwords, or wallet credentials |
 
 ## Release sequence
 
-1. Complete local contract, SDK, web, threat model, and automated gates.
-2. Obtain an independent smart-contract review before any real-fund use.
-3. Create a public repository and tagged release only with explicit approval.
-4. Deploy and verify on Base Sepolia with synthetic test assets.
-5. Run two external developer pilots and close correctness findings.
-6. Register the app on Base.dev and obtain a real Builder Code.
-7. Deploy and verify the reviewed contract on Base mainnet.
-8. Publish the standard web app and Loom demo.
-9. Recruit at least five real pilots and report unrounded usage and volume.
-10. Apply to Builder Rewards during prototyping and Builder Grants after impact.
+1. Complete and review the Base Sepolia wallet workbench and automated gates.
+2. Publish the static browser app with the pinned guard address and security
+   headers.
+3. Independently verify the public page, CSP, chain, contract, token, and
+   transaction intent. Do not perform a real-fund transaction.
+4. Create or confirm the required project and builder X and Farcaster profiles.
+5. Record a one-minute demo of the observed public release and testnet evidence.
+6. Recheck the 150-word case against the public state.
+7. User reviews the media license, privacy notice, and all identity fields.
+8. Submit the official nomination manually and retain the receipt.
+9. Continue pilots, Builder Code attribution evidence, and independent contract review
+   as post-nomination evidence and mainnet gates.
 
 ## Stop conditions
 
-Stop before deployment or form submission if the form URL lacks an official
-source chain, ownership is disputed, audit findings remain open, metrics cannot
-be reproduced, or Base exclusivity is no longer true.
+Stop before hosting or nomination if the build contains a secret, the public
+artifact differs from the reviewed commit, the contract address or chain is
+wrong, ownership of submitted media is disputed, required profiles are not
+controlled by the user, or the form is not reached through the official source
+chain below.
+
+Do not select `Yes - live on Base mainnet`. Do not claim users, volume, revenue,
+audit, Base endorsement, Builder Code, or a public wallet flow without observed
+evidence. Do not accept the media license on the user's behalf.
 
 ## Official sources
 
 - <https://docs.base.org/get-started/get-funded>
-- <https://docs.base.org/apps/builder-codes/builder-codes>
-- <https://docs.base.org/apps/growth/rewards>
-- <https://blog.base.org/request-for-builders-1>
+- <https://paragraph.com/@grants.base.eth/calling-based-builders>
+- <https://docs.google.com/forms/d/e/1FAIpQLSfXuEzmiAzRhie_z9raFCF1BXweXgVt18o-DvBuRRgyTygL2A/viewform>
+
+The first source describes the current 1-5 ETH retroactive program. The second
+is the Base Grants article linked by the official documentation. The third is
+the nomination form linked by that article and identifies itself as created
+inside Coinbase.

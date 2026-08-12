@@ -1,9 +1,11 @@
-import { useState } from 'react';
-import type { Address } from 'viem';
+import { useEffect, useMemo, useState } from 'react';
 import { Field, Toggle } from './components/Field';
 import { ShieldIcon, WalletIcon } from './components/Icons';
 import { ResultPanel } from './components/ResultPanel';
-import { configuredGuardAddress, INITIAL_FIELDS, runSimulation, type SimulatorFields } from './model';
+import { createWalletWorkbenchAdapter, WalletWorkbench, type WalletWorkbenchAdapter, type WalletWorkbenchState } from './components/WalletWorkbench';
+import { BASE_SEPOLIA_GUARD_ADDRESS, BASE_SEPOLIA_USDC_ADDRESS } from './deployment';
+import { INITIAL_FIELDS, runSimulation, type SimulatorFields } from './model';
+import { createBrowserWalletAdapter, type TransactionCoordinator } from './onchain';
 
 interface SubmittedSimulation {
   readonly fields: SimulatorFields;
@@ -12,26 +14,63 @@ interface SubmittedSimulation {
 
 const initialResult: SubmittedSimulation = { fields: INITIAL_FIELDS, result: runSimulation(INITIAL_FIELDS) };
 
-export function App() {
+function createDeferredWalletAdapter(): WalletWorkbenchAdapter & { dispose: () => void } {
+  let coordinator: TransactionCoordinator | undefined;
+  let delegate: WalletWorkbenchAdapter | undefined;
+  let state: WalletWorkbenchState = {
+    connected: false,
+    builderCodeConfigured: true,
+    writesEnabled: false,
+    disabledReason: 'Connect an injected wallet to verify the Base Sepolia deployment.',
+    chainName: 'Base Sepolia',
+    guardAddress: BASE_SEPOLIA_GUARD_ADDRESS,
+    tokenAddress: BASE_SEPOLIA_USDC_ADDRESS,
+    deploymentVerified: false,
+  };
+  const listeners = new Set<(next: WalletWorkbenchState) => void>();
+  let unsubscribe: (() => void) | undefined;
+
+  const ensureDelegate = () => {
+    if (delegate) return delegate;
+    coordinator = createBrowserWalletAdapter();
+    delegate = createWalletWorkbenchAdapter(coordinator);
+    unsubscribe = delegate.subscribe((next) => {
+      state = next;
+      listeners.forEach((listener) => listener(state));
+    });
+    return delegate;
+  };
+
+  return {
+    getState: () => delegate?.getState() ?? state,
+    subscribe: (listener) => { listeners.add(listener); return () => listeners.delete(listener); },
+    connect: async () => { await ensureDelegate().connect(); },
+    prepare: async (action, values) => {
+      if (!delegate) throw new Error('Connect and verify the wallet before preparing a transaction.');
+      return delegate.prepare(action, values);
+    },
+    confirm: async (prepared) => {
+      if (!delegate) throw new Error('Connect and verify the wallet before requesting a signature.');
+      return delegate.confirm(prepared);
+    },
+    dispose: () => { unsubscribe?.(); coordinator?.dispose(); listeners.clear(); },
+  };
+}
+
+interface AppProps {
+  walletAdapter?: WalletWorkbenchAdapter;
+}
+
+export function App({ walletAdapter }: AppProps) {
   const [fields, setFields] = useState<SimulatorFields>(INITIAL_FIELDS);
   const [submitted, setSubmitted] = useState(initialResult);
-  const [walletMessage, setWalletMessage] = useState('');
-  const guardAddress: Address | undefined = configuredGuardAddress(import.meta.env.VITE_GUARD_ADDRESS);
+  const [mode, setMode] = useState<'simulate' | 'wallet'>('simulate');
+  const defaultWalletAdapter = useMemo(() => walletAdapter ? undefined : createDeferredWalletAdapter(), [walletAdapter]);
+  const activeWalletAdapter = walletAdapter ?? defaultWalletAdapter!;
+
+  useEffect(() => () => defaultWalletAdapter?.dispose(), [defaultWalletAdapter]);
 
   const update = <K extends keyof SimulatorFields>(key: K, value: SimulatorFields[K]) => setFields((current) => ({ ...current, [key]: value }));
-  const connect = async () => {
-    if (!guardAddress) {
-      setWalletMessage('Wallet mode is unavailable until VITE_GUARD_ADDRESS contains a valid deployment address.');
-      return;
-    }
-    try {
-      const { connectInjectedWallet } = await import('./wallet');
-      const connected = await connectInjectedWallet(guardAddress);
-      setWalletMessage(`Connected on chain ${connected.chainId}. No transaction was requested.`);
-    } catch (error) {
-      setWalletMessage(error instanceof Error ? error.message : 'Wallet connection failed.');
-    }
-  };
 
   return (
     <div className="app-shell">
@@ -43,15 +82,14 @@ export function App() {
         <section className="intro" id="simulator">
           <h1>Delegate payments. Keep the limits.</h1>
           <p>Set the agent, merchant, amount and daily ceiling before any transaction is signed.</p>
-          <div className="local-status">Local simulation <b>·</b> Not deployed <b>·</b> Unaudited</div>
-          {walletMessage ? <p className="wallet-message" role="status">{walletMessage}</p> : null}
+          <div className="local-status">{mode === 'simulate' ? 'Synthetic local mode' : 'Base Sepolia'} <b>·</b> {mode === 'simulate' ? 'No wallet transaction' : 'Testnet only'} <b>·</b> Unaudited</div>
         </section>
-        <div className="workspace">
+        <div className="mode-tabs" aria-label="Interaction mode">
+          <button type="button" className={mode === 'simulate' ? 'active' : ''} aria-pressed={mode === 'simulate'} onClick={() => setMode('simulate')}>Simulate</button>
+          <button type="button" className={mode === 'wallet' ? 'active' : ''} aria-pressed={mode === 'wallet'} onClick={() => setMode('wallet')}><WalletIcon />Base Sepolia wallet</button>
+        </div>
+        {mode === 'simulate' ? <div className="workspace">
           <form className="policy-form" onSubmit={(event) => { event.preventDefault(); setSubmitted({ fields: { ...fields }, result: runSimulation(fields) }); }}>
-            <div className="mode-tabs" aria-label="Interaction tools">
-              <span className="active">Simulate</span>
-              <button type="button" onClick={connect}><WalletIcon />Wallet check</button>
-            </div>
             <Field label="Agent" value={fields.agent} onChange={(value) => update('agent', value)} />
             <Field label="Merchant" value={fields.merchant} onChange={(value) => update('merchant', value)} />
             <Field label="Payment amount" value={fields.amount} onChange={(value) => update('amount', value)} type="number" step="0.01" suffix="USDC" />
@@ -68,9 +106,9 @@ export function App() {
             <button className="run-button" type="submit">Run preflight</button>
           </form>
           <div><ResultPanel result={submitted.result} fields={submitted.fields} /></div>
-        </div>
+        </div> : <WalletWorkbench adapter={activeWalletAdapter} />}
       </main>
-      <footer><ShieldIcon /> Local proof of concept. Never paste a private key.</footer>
+      <footer><ShieldIcon /> Public Base Sepolia testnet proof of concept. Never paste a private key.</footer>
     </div>
   );
 }

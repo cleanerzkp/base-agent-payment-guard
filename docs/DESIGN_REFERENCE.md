@@ -17,13 +17,18 @@ built-in image generation tool:
 - No fake usage, charts, prices, history, testimonials, decorative glow,
   gradients, bento grid, or private-key fields.
 
-## Above-the-fold copy lock
+## Historical above-the-fold copy lock
+
+The generated concept predates the verified Base Sepolia deployment. Its
+`Not deployed` status is historical and must not ship. Current release copy must
+name Base Sepolia, link the verified contract, retain `Unaudited`, and distinguish
+synthetic simulation from any separately reviewed wallet workbench.
 
 - Base Agent Payment Guard
 - Read security notes
 - Delegate payments. Keep the limits.
 - Set the agent, merchant, amount and daily ceiling before any transaction is signed.
-- Local simulation · Not deployed · Unaudited
+- Local simulation · Not deployed · Unaudited (historical reference only)
 - Simulate
 - Wallet
 - Agent
@@ -57,8 +62,9 @@ ledger. The concept is a design reference only; no part of the PNG ships as UI.
 - The implementation preserves the two-column workbench, restrained Base-blue
   palette, pale background, compact labels, decision rail, evidence block, and
   safety footer.
-- The control says `Wallet check`, not `Wallet`. This makes its informational,
-  transaction-free behavior explicit.
+- The control says `Base Sepolia wallet`. It opens the separately reviewed,
+  testnet-only workbench for explicit, one-transaction wallet requests. The
+  synthetic simulator remains transaction-free.
 - Merchant permission, pause, and replay toggles appear below the core form.
   They make the contract's denial paths testable without weakening the open
   desktop composition.

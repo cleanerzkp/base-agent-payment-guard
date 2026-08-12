@@ -43,4 +43,5 @@ export const baseAgentPaymentGuardAbi = parseAbi([
 
 export const erc20ApproveAbi = parseAbi([
   'function approve(address spender, uint256 amount) returns (bool)',
+  'function allowance(address owner, address spender) view returns (uint256)',
 ]);

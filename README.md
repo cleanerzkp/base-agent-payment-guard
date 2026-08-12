@@ -13,8 +13,10 @@ to an allowed merchant through a standard ERC-20 allowance.
 
 This repository is an MVP with one Base Sepolia testnet deployment. It is not
 audited, endorsed by Base, or used in production. It has no reported users,
-transaction volume, revenue, Builder Code, or grant award. Do not use it with
-real funds.
+transaction volume, revenue, attributed Builder Code transaction, or grant
+award. The public Builder Code `bc_xiu880fh` is integrated into the wallet
+transaction intent, but no attributed transaction has been observed. Do not use
+this project with real funds.
 
 The reviewed testnet deployment is
 [`0x048eAF1596492cd29378fF240841b8ec32db50eA`](https://sepolia.basescan.org/address/0x048eAF1596492cd29378fF240841b8ec32db50eA).
@@ -29,14 +31,18 @@ The machine-readable evidence is in
 - Solidity policy and receipt contract for Base mainnet and Base Sepolia.
 - TypeScript SDK for fail-closed preflight, typed contract requests, trusted-RPC
   receipt verification, and domain-bound aggregate metrics.
-- Standard React web app with a synthetic no-wallet simulator and optional
-  injected-wallet readiness check. The MVP does not request transactions.
+- Standard React web app with a synthetic simulator and an injected-wallet
+  boundary. Treat any Base Sepolia wallet workbench as a separate release
+  surface. Do not describe it as live until its exact read, simulation, and
+  signature flow has passed review on the public deployment.
 
 The pure preflight accepts caller-supplied policy and chain state. It does not
 prove that those values came from one block or remain current. Any future wallet
-write flow must read policy, merchant permission, spend, replay state, and the
-block timestamp at one consistent block. It must then simulate the exact
-encoded call immediately before requesting a signature.
+write integration must preserve the current coordinator's rules. Payment state
+is read at one consistent block and repeated when the payment is confirmed.
+Every write rechecks the wallet account, chain, and verified deployment, then
+simulates its exact Builder-Code-suffixed calldata at a fresh block before the
+wallet request.
 
 The receipt verifier requires an explicit Base chain, guard address,
 transaction hash, log index, and confirmation threshold. It accepts metrics
@@ -133,10 +139,29 @@ item is observed independently.
 
 ## Grant path
 
-This is not yet eligible for a live-product grant form. See
+The official Base Builder Grant nomination accepts projects that are live on
+Base testnet and describes retroactive grants of 1-5 ETH. This project has the
+verified testnet contract, but it is not nomination-ready until it also has an
+observed public product URL, a one-minute demo, and the required project and
+builder social profiles. The separate pasted up-to-$5,000 live-product form has
+not been authenticated from an official source and is not the active path. See
 [`docs/GRANT_READINESS.md`](docs/GRANT_READINESS.md) for the evidence gates and
 [`docs/GRANT_APPLICATION_DRAFT.md`](docs/GRANT_APPLICATION_DRAFT.md) for a
 truthful, non-submittable draft.
+
+## Static hosting
+
+[`vercel.json`](vercel.json) defines a secret-free static Vercel build and
+security headers for the browser app. It permits browser connections only to
+the same origin and Base's official Sepolia RPC. It does not add analytics,
+server functions, wallet credentials, or a deployment claim.
+
+The reviewed Base Sepolia deployment identity is hard-pinned in the web source.
+The static build needs no environment variable.
+
+Read [`docs/STATIC_HOSTING.md`](docs/STATIC_HOSTING.md) before publishing. A
+hosting dashboard must not contain a private key, seed phrase, wallet password,
+RPC credential, or deployer keystore.
 
 ## Security
 

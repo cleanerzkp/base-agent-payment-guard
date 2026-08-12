@@ -2,8 +2,9 @@
 
 Status date: 2026-08-12
 
-This file records observed local evidence. It does not claim public release,
-deployment, audit, users, volume, revenue, Builder Code, or grant eligibility.
+This file records observed repository and Base Sepolia evidence. It does not
+claim a public browser release, wallet transaction flow, audit, users, volume,
+revenue, Builder Code attribution, grant eligibility, or Base endorsement.
 
 ## Environment
 
@@ -12,7 +13,35 @@ deployment, audit, users, volume, revenue, Builder Code, or grant eligibility.
 - npm 11.17.0
 - Foundry 1.5.1
 - Solidity 0.8.28
-- Wallet credentials, RPC secrets, deployments, and funds: none
+- No wallet credential, RPC secret, seed phrase, private key, or keystore is
+  stored in the repository
+
+## Base Sepolia deployment evidence
+
+- Chain ID: `84532`
+- Guard: `0x048eAF1596492cd29378fF240841b8ec32db50eA`
+- Immutable token: canonical Base Sepolia USDC at
+  `0x036CbD53842c5426634e7929541eC2318f3dCF7e`
+- Deployment transaction:
+  `0xd65799f594885c690443a15511ae585a0d1df111980fad5f9f0ac95c49539751`
+- Deployment block: `45395858`
+- Runtime code size: 4,610 bytes
+- Source verification: Sourcify exact match
+- Machine-readable evidence: [`../deployments/base-sepolia.json`](../deployments/base-sepolia.json)
+
+The deployment used Base Sepolia test ETH and testnet USDC only. It does not
+prove that the browser app is publicly hosted, that an owner policy or payment
+was executed, or that the project has a user.
+
+## Builder Code evidence
+
+- Public Builder Code: `bc_xiu880fh`
+- Registration state: obtained for the dedicated project wallet on 2026-08-12
+- App integration: observed in reviewed source and automated wallet-review tests
+- Attributed Base Sepolia transaction: not yet observed
+
+The code is public ERC-8021 attribution metadata. It is not a credential and
+does not prove a transaction, user, impact, endorsement, or award.
 
 ## Contract evidence
 
@@ -28,8 +57,9 @@ deployment, audit, users, volume, revenue, Builder Code, or grant eligibility.
 - Fresh-context review closed the direct self-payment metric-integrity gap and
   added policy-rotation replay and daily-spend regression cases.
 
-Observed local contract result before final handoff: 22 tests passed, zero
-failed; format passed; runtime size 4,610 bytes. Re-run the commands in README
+Observed local contract result before final handoff: 28 tests passed, zero
+failed, including three 256-run fuzz properties; format passed; runtime size
+4,610 bytes. Re-run the commands in README
 after any change and update this count only from observed output.
 
 ## SDK and web evidence
@@ -38,9 +68,13 @@ after any change and update this count only from observed output.
 - Fail-closed pure preflight with stable Rule IDs.
 - Typed transaction builders without private-key inputs.
 - Trusted-RPC receipt verification and domain-bound aggregate helpers.
-- Responsive, local-only policy simulator with truthful unaudited and
-  undeployed state.
-- Optional injected-wallet readiness check that requests no transaction.
+- Responsive policy simulator with a verified testnet contract boundary and
+  truthful unaudited state.
+- Injected-wallet workbench for explicit Base Sepolia testnet writes. It
+  verifies the pinned deployment, reviews exact calldata and attribution,
+  simulates at a fresh block, and never retries a send.
+- The wallet workbench is not proof of a public release or successful
+  transaction. Those require separate hosting and onchain evidence.
 - Clean dependency install from the committed lock with lifecycle scripts
   disabled.
 - Strict runtime-type, uint-width, address, reference, receipt-origin, receipt-ID,
@@ -48,8 +82,8 @@ after any change and update this count only from observed output.
   validation at the SDK boundary.
 
 Observed result for this updated repository snapshot: exact locked `npm ci`
-completed, then `npm run check:all` passed with 34 SDK tests, 5 web tests, both
-TypeScript typechecks and production builds, 22 Solidity tests, Solidity format,
+completed, then `npm run check:all` passed with 34 SDK tests, 40 web tests, both
+TypeScript typechecks and production builds, 28 Solidity tests, Solidity format,
 offline contract build, and contract size checks. Previously recorded browser
 checks passed for the allowed path, self-payment denial, invalid-expiry failure,
 and visible Rule ID diagnostics. At 390 by 844 CSS pixels, document width
@@ -94,4 +128,6 @@ domain. The exact locked completion gates passed after remediation.
 - A standard, non-rebasing, non-fee-on-transfer stablecoin is assumed.
 - No independent audit or stateful invariant-fuzz campaign has been completed.
 - No Base or Coinbase team has reviewed or endorsed the project.
-- No live Google Form was authenticated or submitted.
+- The official Base Grant nomination form is authenticated through Base's
+  funding documentation and Base Grants article, but it has not been submitted.
+- The separate pasted up-to-$5,000 live-product form remains unauthenticated.

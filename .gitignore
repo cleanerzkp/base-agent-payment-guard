@@ -4,6 +4,7 @@ out/
 cache/
 broadcast/
 coverage/
+.vercel/
 .DS_Store
 .env
 .env.*

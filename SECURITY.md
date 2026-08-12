@@ -105,22 +105,45 @@ phrase or accept a raw private key.
 
 Pure preflight trusts its caller-supplied policy, `merchantAllowed`,
 `spentToday`, `referenceUsed`, and `now` values. Well-formed values can still be
-stale or come from different blocks. Any future write flow must read these
-values at one consistent block, use that block's timestamp, and immediately
-simulate the exact encoded call before requesting a wallet signature. A revert
-after simulation remains an expected race and must fail closed.
+stale or come from different blocks. The current Base Sepolia payment flow reads
+the policy, merchant permission, spend, replay state, and block timestamp at one
+consistent block. Before each payment signature, it repeats those state reads at
+a fresh verified block and simulates the exact final call. Approval writes also
+re-read the allowance when the operation relies on its observed value. Every
+write rechecks the wallet account, wallet chain, and verified deployment, then
+simulates its exact Builder-Code-suffixed calldata at the fresh block. Owner
+policy writes rely on that fresh exact-call simulation instead of unrelated
+policy reads. A revert after simulation remains an expected race and must fail
+closed.
 
 The browser is exposed to dependency compromise, XSS, malicious extensions,
 wallet phishing, stale contract configuration, and RPC inconsistency. The MVP
-does not include a backend or secrets. A production release needs a dependency
-review, content security policy, verified artifact provenance, contract-address
-pinning, independent audit, and deployment monitoring.
+does not include a backend or secrets. The static-host policy permits only
+same-origin resources and Base's official Sepolia RPC, denies framing and
+plugins, and disables unused browser capabilities. This policy does not make
+the app audited or production-safe. A production release still needs a
+dependency review, verified artifact provenance, contract-address pinning,
+independent audit, and deployment monitoring.
+
+The injected provider is a local browser-extension boundary. It does not need
+an outbound origin in `connect-src`. If a later wallet connector, analytics
+provider, font, image host, or RPC is added, keep it blocked until its exact
+origin, data flow, and failure behavior are reviewed. Do not weaken the policy
+with wildcard origins or `unsafe-eval`.
 
 ### Developer and release surface
 
 CI, package registries, lockfiles, deployment scripts, and environment files
 are developer-controlled but supply-chain sensitive. Exact dependency pins,
 committed locks, secret-free tests, and reproducible build gates reduce risk.
+`vercel.json` produces only static assets. It defines no server function,
+analytics integration, build-time environment input, or secret. The guard
+address is public, hard-pinned in source, and must match the reviewed deployment
+manifest before each release.
+The registered ERC-8021 Builder Code `bc_xiu880fh` is public attribution
+metadata, not a credential. Claim source integration only after the exact data
+suffix appears in the reviewed transaction intent. Claim an attributed Base
+Sepolia transaction only after it is observed onchain.
 Deployment and verification remain manual, separately authorized actions.
 The Base Sepolia deployment script rejects every other chain and token, and it
 contains no signer input or secret-loading path. Supply its signer only through
@@ -128,10 +151,17 @@ Foundry's encrypted-account or hardware-wallet boundary. Never pass a raw key
 or seed phrase through the CLI, environment, repository, or chat. Foundry
 broadcast artifacts are ignored by Git and are not deployment evidence until
 their transaction and onchain results are checked independently.
-The current injected-wallet check is informational only. Before any future
-write surface, use chain-specific verified deployment metadata, verify contract
-bytecode and the immutable token, subscribe to account/chain changes, and
-re-read account, chain, and policy immediately before every signature request.
+The injected-wallet workbench can submit real Base Sepolia testnet writes after
+explicit review. It uses chain-specific deployment metadata, verifies contract
+bytecode and the immutable token through the independent public RPC, and
+invalidates prepared operations on account or chain changes. The review shows
+the exact Builder Code, ERC-8021 suffix, and final calldata. Immediately before
+each wallet request, the coordinator rechecks the account and chain. It rechecks
+the allowance for approval operations and all payment-authority state for
+payment operations, where those writes rely on the observed state. It verifies
+the deployment and simulates the exact final calldata at a fresh block for every
+write. The app intentionally omits the nonce from `eth_sendTransaction`; the
+wallet manages it, and the coordinator never retries a send.
 
 Out of scope for this MVP are wallet-provider compromise, Base consensus
 failure, canonical stablecoin insolvency or blacklist behavior, phishing outside
