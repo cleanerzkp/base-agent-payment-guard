@@ -11,9 +11,18 @@ to an allowed merchant through a standard ERC-20 allowance.
 
 ## Status
 
-This repository is a local MVP. It is not deployed, audited, endorsed by Base,
-or used in production. It has no reported users, transaction volume, revenue,
-Builder Code, or grant award. Do not use it with real funds.
+This repository is an MVP with one Base Sepolia testnet deployment. It is not
+audited, endorsed by Base, or used in production. It has no reported users,
+transaction volume, revenue, Builder Code, or grant award. Do not use it with
+real funds.
+
+The reviewed testnet deployment is
+[`0x048eAF1596492cd29378fF240841b8ec32db50eA`](https://sepolia.basescan.org/address/0x048eAF1596492cd29378fF240841b8ec32db50eA).
+It was deployed from commit `69b8eaa` in
+[transaction `0xd657…9751`](https://sepolia.basescan.org/tx/0xd65799f594885c690443a15511ae585a0d1df111980fad5f9f0ac95c49539751),
+binds canonical Base Sepolia USDC, and has an exact-match Sourcify verification.
+The machine-readable evidence is in
+[`deployments/base-sepolia.json`](deployments/base-sepolia.json).
 
 ## Surfaces
 

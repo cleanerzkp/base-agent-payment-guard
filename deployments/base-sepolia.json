@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "network": "base-sepolia",
+  "chainId": 84532,
+  "commit": "69b8eaa490f33a43a18d088f4b4f38ba27425346",
+  "contract": {
+    "name": "BaseAgentPaymentGuard",
+    "address": "0x048eAF1596492cd29378fF240841b8ec32db50eA",
+    "runtimeCodeBytes": 4610,
+    "runtimeCodeHash": "0x743bcd90e5a4a27d3c8b3569bac8ff5eeb8d0d4a52436c11b24352162e167b86"
+  },
+  "constructor": {
+    "stablecoin": "0x036CbD53842c5426634e7929541eC2318f3dCF7e"
+  },
+  "deployment": {
+    "deployer": "0x2bB38deca956BD2F531B18C83Fb7fCeB9fD1B195",
+    "transactionHash": "0xd65799f594885c690443a15511ae585a0d1df111980fad5f9f0ac95c49539751",
+    "blockNumber": 45395858,
+    "blockHash": "0x4672a3026beabf22585d2e0eba88bef1555825d1c0e805bad577bb2b4f0b5db7",
+    "timestamp": "2026-08-12T18:40:04Z",
+    "status": "success"
+  },
+  "verification": {
+    "provider": "sourcify",
+    "status": "exact_match",
+    "jobId": "6608cef0-7ac6-46c7-a2b5-622cf4e0ca32",
+    "url": "https://repo.sourcify.dev/84532/0x048eAF1596492cd29378fF240841b8ec32db50eA"
+  },
+  "limitations": [
+    "Base Sepolia testnet only",
+    "Unaudited proof of concept",
+    "No production users, volume, revenue, grant award, or Base endorsement",
+    "Do not use with real assets"
+  ]
+}
