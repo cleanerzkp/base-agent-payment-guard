@@ -13,9 +13,10 @@ form explicitly accepts `No - live on Base testnet`, so a mainnet deployment is
 not a form prerequisite. It requires a project URL, project and builder X and
 Farcaster identities, a grant case of at most 150 words, and a one-minute demo.
 
-The project now has a verified Base Sepolia contract and a reviewed public
-browser release. The required social identities, the demo, and the user's
-review of the form's license and privacy terms remain open. The public Builder
+The project now has a verified Base Sepolia contract, a reviewed public
+browser release, and a privacy-reviewed 31-second demo. The required social
+identities and the user's review of the form's license and privacy terms remain
+open. The public Builder
 Code `bc_xiu880fh` is
 registered and integrated into reviewed wallet transaction intents, but its
 first attributed transaction remains unobserved. The up-to-$5,000 intake has
@@ -36,7 +37,7 @@ a different live-product evidence set.
 | Base deployment state | Verified Base Sepolia deployment | Select `No - live on Base testnet`; do not select mainnet |
 | Builder Code | Public code `bc_xiu880fh` registered and integrated into reviewed intents | Record the first attributed transaction separately |
 | Why it deserves a grant | Truthful draft under 150 words | Recheck against the public release before submission |
-| One-minute demo | Missing | Record the observed public app and verified testnet contract |
+| One-minute demo | [Privacy-safe Base Sepolia demo](https://github.com/cleanerzkp/base-agent-payment-guard/releases/download/v0.1.0/base-agent-payment-guard-demo-2026-08-12.webm), 31 seconds | Satisfied; synthetic values only and no signature requested |
 | Media license confirmation | Explicit user decision required | User reviews ownership and the non-exclusive, worldwide, irrevocable license before checking |
 | Privacy acknowledgement | Explicit user review required | Never enter secrets, account data, passwords, or wallet credentials |
 
@@ -49,7 +50,9 @@ a different live-product evidence set.
 3. Independently verify the public page, headers, artifact hashes, chain,
    contract, and token display. **Complete.** No wallet transaction was used.
 4. Create or confirm the required project and builder X and Farcaster profiles.
-5. Record a one-minute demo of the observed public release and testnet evidence.
+5. Record a short demo of the observed public release and testnet evidence.
+   **Complete.** The 31-second release asset uses synthetic values and requests
+   no wallet signature.
 6. Recheck the 150-word case against the public state.
 7. User reviews the media license, privacy notice, and all identity fields.
 8. Submit the official nomination manually and retain the receipt.

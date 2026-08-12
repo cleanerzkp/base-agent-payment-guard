@@ -44,10 +44,11 @@ and replay controls on Base.
 ## Grant gate
 
 The official 1-5 ETH Builder Grant nomination explicitly accepts a Base testnet
-project. The verified Sepolia contract satisfies that onchain selection, but
-the nomination still needs project and builder X and Farcaster profiles, a
-truthful case of at most 150 words, a one-minute demo, and explicit review of
-the form's media license and privacy terms. The public
+project. The verified Sepolia contract satisfies that onchain selection, and a
+privacy-reviewed 31-second demo is published with the v0.1.0 release. The
+nomination still needs project and builder X and Farcaster profiles, a truthful
+case of at most 150 words, and explicit review of the form's media license and
+privacy terms. The public
 Builder Code `bc_xiu880fh` is registered and integrated into wallet transaction
 intents, but an attributed transaction remains pending. Mainnet, usage, and
 revenue can strengthen later evidence, but the official nomination form does

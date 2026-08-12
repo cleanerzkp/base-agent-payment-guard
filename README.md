@@ -147,11 +147,12 @@ item is observed independently.
 
 The official Base Builder Grant nomination accepts projects that are live on
 Base testnet and describes retroactive grants of 1-5 ETH. This project has the
-verified testnet contract and public app, but it is not nomination-ready until
-it also has a one-minute demo, the required project and builder social profiles,
-and the user's review of the form terms. The separate pasted up-to-$5,000
-live-product form has not been authenticated from an official source and is not
-the active path. See
+verified testnet contract, public app, and a
+[privacy-safe 31-second demo](https://github.com/cleanerzkp/base-agent-payment-guard/releases/download/v0.1.0/base-agent-payment-guard-demo-2026-08-12.webm).
+It is not nomination-ready until it also has the required project and builder
+social profiles and the user's review of the form terms. The separate pasted
+up-to-$5,000 live-product form has not been authenticated from an official
+source and is not the active path. See
 [`docs/GRANT_READINESS.md`](docs/GRANT_READINESS.md) for the evidence gates and
 [`docs/GRANT_APPLICATION_DRAFT.md`](docs/GRANT_APPLICATION_DRAFT.md) for a
 truthful, non-submittable draft.

@@ -22,7 +22,8 @@ privacy, and media-license fields.
 - Is the project currently live on Base?: **No - live on Base testnet**
 - Verified testnet contract:
   <https://sepolia.basescan.org/address/0x048eAF1596492cd29378fF240841b8ec32db50eA>
-- One-minute demo: **MISSING**
+- One-minute demo:
+  <https://github.com/cleanerzkp/base-agent-payment-guard/releases/download/v0.1.0/base-agent-payment-guard-demo-2026-08-12.webm>
 
 ## Why this deserves a Base grant
 
@@ -43,7 +44,7 @@ submission. Do not add adoption or production claims without evidence.
 
 ## Required confirmations
 
-- One-minute demo URL: **MISSING**
+- One-minute demo URL: **COMPLETE — 31-second privacy-reviewed release asset**
 - Media ownership: **USER MUST CONFIRM**
 - Coinbase media license: **USER MUST REVIEW AND ACCEPT OR DECLINE**
 - Coinbase privacy notice: **USER MUST REVIEW**
