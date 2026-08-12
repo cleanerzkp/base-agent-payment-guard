@@ -374,6 +374,76 @@ contract BaseAgentPaymentGuardTest {
         guard.executePayment(OWNER, merchant, 10e6, externalReference);
     }
 
+    function testFuzzReferenceCannotBeReplayedAfterPolicyReconfiguration(
+        uint64 amountSeed,
+        bytes32 referenceSeed
+    ) public {
+        address merchant = address(0xBEEF);
+        uint256 amount = uint256(amountSeed) % 100e6 + 1;
+        bytes32 externalReference =
+            referenceSeed == bytes32(0) ? bytes32(uint256(1)) : referenceSeed;
+        _configureAndAllow(merchant, amount, amount * 2, uint64(block.timestamp + 7 days));
+        _fundAndApprove(amount * 2);
+
+        vm.prank(AGENT);
+        guard.executePayment(OWNER, merchant, amount, externalReference);
+
+        vm.prank(OWNER);
+        guard.configurePolicy(AGENT, amount, amount * 2, uint64(block.timestamp + 8 days));
+        vm.prank(OWNER);
+        guard.setMerchant(merchant, true);
+
+        vm.expectRevert(BaseAgentPaymentGuard.ReferenceAlreadyUsed.selector);
+        vm.prank(AGENT);
+        guard.executePayment(OWNER, merchant, amount, externalReference);
+    }
+
+    function testFuzzDailySpendCannotExceedConfiguredLimit(uint64 firstSeed, uint64 headroomSeed)
+        public
+    {
+        address merchant = address(0xBEEF);
+        uint256 firstAmount = uint256(firstSeed) % 100e6 + 1;
+        uint256 headroom = uint256(headroomSeed) % 100e6;
+        uint256 dailyLimit = firstAmount + headroom;
+        _configureAndAllow(merchant, dailyLimit, dailyLimit, uint64(block.timestamp + 7 days));
+        _fundAndApprove(dailyLimit + 1);
+
+        vm.prank(AGENT);
+        guard.executePayment(OWNER, merchant, firstAmount, keccak256("fuzz-first"));
+        if (headroom > 0) {
+            vm.prank(AGENT);
+            guard.executePayment(OWNER, merchant, headroom, keccak256("fuzz-fill"));
+        }
+
+        (, uint256 spent) = guard.getDailySpend(OWNER);
+        _assertEq(spent, dailyLimit, "daily limit filled");
+        vm.expectRevert(BaseAgentPaymentGuard.DailyLimitExceeded.selector);
+        vm.prank(AGENT);
+        guard.executePayment(OWNER, merchant, 1, keccak256("fuzz-over-limit"));
+    }
+
+    function testFuzzPolicyReconfigurationCannotResetSameDaySpend(uint64 spentSeed) public {
+        address merchant = address(0xBEEF);
+        uint256 amount = uint256(spentSeed) % 100e6 + 1;
+        _configureAndAllow(merchant, amount, amount, uint64(block.timestamp + 7 days));
+        _fundAndApprove(amount + 1);
+
+        vm.prank(AGENT);
+        guard.executePayment(OWNER, merchant, amount, keccak256("fuzz-before-rotation"));
+
+        uint256 lowerLimit = amount > 1 ? amount - 1 : 1;
+        vm.prank(OWNER);
+        guard.configurePolicy(AGENT, lowerLimit, lowerLimit, uint64(block.timestamp + 8 days));
+        vm.prank(OWNER);
+        guard.setMerchant(merchant, true);
+
+        (, uint256 spent) = guard.getDailySpend(OWNER);
+        _assertEq(spent, amount, "spend survives reconfiguration");
+        vm.expectRevert(BaseAgentPaymentGuard.DailyLimitExceeded.selector);
+        vm.prank(AGENT);
+        guard.executePayment(OWNER, merchant, 1, keccak256("fuzz-after-rotation"));
+    }
+
     function testReferenceAndAgentAuthorizationSurvivePolicyRotation() public {
         address merchant = address(0xBEEF);
         address nextAgent = address(0xB0B);

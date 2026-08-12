@@ -2,10 +2,10 @@ node_modules/
 dist/
 out/
 cache/
+broadcast/
 coverage/
 .DS_Store
 .env
 .env.*
 !.env.example
 *.log
-

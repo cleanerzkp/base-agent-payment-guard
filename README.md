@@ -57,6 +57,71 @@ npm run dev --workspace @base-agent-payment-guard/web
 No command in this repository needs a wallet secret. The committed `.npmrc`
 disables dependency lifecycle scripts and the lockfile pins resolved packages.
 
+## Base Sepolia deployment boundary
+
+The deployment script targets only Base Sepolia (`84532`) and only Circle's
+canonical Base Sepolia USDC at `0x036CbD53842c5426634e7929541eC2318f3dCF7e`.
+It fails before broadcast on any other chain or token. This is testnet USDC, not
+mainnet USDC, and it has no real-funds guarantee.
+
+The script never reads or accepts a private key. Use a Foundry encrypted account
+or hardware wallet. Do not pass `--private-key`, a seed phrase, or key material
+through an environment variable, shell argument, repository file, or chat.
+
+Set only non-secret deployment values:
+
+```bash
+export BASE_SEPOLIA_RPC_URL="https://sepolia.base.org"
+export DEPLOYER_ADDRESS="0xYourPublicDeployerAddress"
+export FOUNDRY_ACCOUNT="your-local-encrypted-account-name"
+```
+
+Simulate against Base Sepolia before any signature:
+
+```bash
+forge script script/DeployBaseSepolia.s.sol:DeployBaseSepolia \
+  --rpc-url "$BASE_SEPOLIA_RPC_URL" \
+  --sender "$DEPLOYER_ADDRESS"
+```
+
+After reviewing the simulation, broadcast with an encrypted Foundry account:
+
+```bash
+forge script script/DeployBaseSepolia.s.sol:DeployBaseSepolia \
+  --rpc-url "$BASE_SEPOLIA_RPC_URL" \
+  --sender "$DEPLOYER_ADDRESS" \
+  --account "$FOUNDRY_ACCOUNT" \
+  --broadcast
+```
+
+For a Ledger hardware wallet, replace the account option with `--ledger`. Keep
+the explicit `--sender` value and confirm chain `84532`, the contract creation,
+and the immutable USDC address on the device before signing.
+
+Verify the deployed source without an explorer API key:
+
+```bash
+export GUARD_ADDRESS="0xDeployedGuardAddress"
+export BASE_SEPOLIA_USDC="0x036CbD53842c5426634e7929541eC2318f3dCF7e"
+
+forge verify-contract \
+  --chain 84532 \
+  --verifier sourcify \
+  "$GUARD_ADDRESS" \
+  contracts/BaseAgentPaymentGuard.sol:BaseAgentPaymentGuard
+
+cast chain-id --rpc-url "$BASE_SEPOLIA_RPC_URL"
+cast call \
+  --rpc-url "$BASE_SEPOLIA_RPC_URL" \
+  "$GUARD_ADDRESS" \
+  "stablecoin()(address)"
+```
+
+Deployment does not make the MVP audited or production-ready. Use only Base
+Sepolia test assets. Record the transaction hash, deployed address, source
+verification URL, signer address, chain ID, and immutable token only after each
+item is observed independently.
+
 ## Grant path
 
 This is not yet eligible for a live-product grant form. See

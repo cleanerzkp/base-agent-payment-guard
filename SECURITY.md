@@ -122,6 +122,12 @@ CI, package registries, lockfiles, deployment scripts, and environment files
 are developer-controlled but supply-chain sensitive. Exact dependency pins,
 committed locks, secret-free tests, and reproducible build gates reduce risk.
 Deployment and verification remain manual, separately authorized actions.
+The Base Sepolia deployment script rejects every other chain and token, and it
+contains no signer input or secret-loading path. Supply its signer only through
+Foundry's encrypted-account or hardware-wallet boundary. Never pass a raw key
+or seed phrase through the CLI, environment, repository, or chat. Foundry
+broadcast artifacts are ignored by Git and are not deployment evidence until
+their transaction and onchain results are checked independently.
 The current injected-wallet check is informational only. Before any future
 write surface, use chain-specific verified deployment metadata, verify contract
 bytecode and the immutable token, subscribe to account/chain changes, and
