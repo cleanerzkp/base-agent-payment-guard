@@ -1,0 +1,27 @@
+{
+  "name": "base-agent-payment-guard",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "test": "npm run test --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "build": "npm run build --workspaces --if-present",
+    "check": "npm run test && npm run typecheck && npm run build",
+    "check:contracts": "forge fmt --check && forge test --offline && forge build --offline --sizes",
+    "check:all": "npm run check && npm run check:contracts"
+  },
+  "engines": {
+    "node": ">=24.0.0 <25",
+    "npm": ">=11.0.0 <12"
+  },
+  "packageManager": "npm@11.17.0",
+  "devDependencies": {
+    "@types/node": "24.13.3",
+    "typescript": "7.0.2"
+  }
+}
