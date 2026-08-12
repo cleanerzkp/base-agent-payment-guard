@@ -45,5 +45,7 @@ jobs:
           version: v1.5.1
       - name: Check formatting
         run: forge fmt --check
+      - name: Install pinned Solidity compiler
+        run: forge build --sizes
       - name: Run contract tests
         run: npm run check:contracts
