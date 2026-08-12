@@ -29,8 +29,8 @@ and replay controls on Base.
 - `@base-agent-payment-guard/sdk`: pure preflight, ABI transaction builders,
   trusted-RPC receipt verification, and domain-bound aggregate metrics.
 - `@base-agent-payment-guard/web`: browser simulator and injected-wallet
-  boundary. The wallet workbench and public host remain separately reviewed
-  release surfaces until observed.
+  boundary. The reviewed public testnet host is
+  <https://base-agent-payment-guard.vercel.app>.
 
 ## Explicit non-goals
 
@@ -45,9 +45,9 @@ and replay controls on Base.
 
 The official 1-5 ETH Builder Grant nomination explicitly accepts a Base testnet
 project. The verified Sepolia contract satisfies that onchain selection, but
-the nomination still needs a public project URL, project and builder X and
-Farcaster profiles, a truthful case of at most 150 words, a one-minute demo,
-and explicit review of the form's media license and privacy terms. The public
+the nomination still needs project and builder X and Farcaster profiles, a
+truthful case of at most 150 words, a one-minute demo, and explicit review of
+the form's media license and privacy terms. The public
 Builder Code `bc_xiu880fh` is registered and integrated into wallet transaction
 intents, but an attributed transaction remains pending. Mainnet, usage, and
 revenue can strengthen later evidence, but the official nomination form does

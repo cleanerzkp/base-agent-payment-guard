@@ -2,9 +2,10 @@
 
 Status date: 2026-08-12
 
-This runbook prepares a static Vercel release. It does not prove that a public
-deployment exists. Record a URL only after the deployed artifact and response
-headers are observed independently.
+The preparation steps in this runbook do not prove that a public deployment
+exists. Record a URL only after the deployed artifact and response headers are
+observed independently. The production evidence below records that separate
+verification.
 
 ## Why Vercel
 
@@ -64,20 +65,28 @@ blocked. Review and narrow the policy before adding any new provider.
 
 ## Post-deploy evidence
 
-Replace each placeholder only with observed evidence:
+Observed production evidence:
 
-- Public URL: **MISSING**
-- Vercel deployment ID: **MISSING**
-- Released Git commit: **MISSING**
-- Build result: **MISSING**
-- CSP response header: **MISSING**
-- `X-Frame-Options: DENY`: **MISSING**
-- `X-Content-Type-Options: nosniff`: **MISSING**
-- Public guard address match: **MISSING**
-- Base Sepolia chain match: **MISSING**
-- Browser console errors: **MISSING**
-- Wallet-workbench read and simulation evidence: **MISSING**
-- Builder Code integration: **OBSERVED IN REVIEWED SOURCE AND TESTS; first attributed transaction remains missing**
+- Public URL: <https://base-agent-payment-guard.vercel.app>
+- Vercel deployment ID: `dpl_3gqP92qf2hA38PpEq7LJ3sdUmgMj`
+- Reviewed implementation commit:
+  `25e7194807cee180fcd5afca0fc53544f7c8634f`
+- Build result: `READY`; exact SDK-then-web build completed on Node 24
+- Public HTML, main JavaScript, and CSS SHA-256 values matched the local build
+- CSP response header: observed and equal to `vercel.json`
+- `X-Frame-Options: DENY`: observed
+- `X-Content-Type-Options: nosniff`: observed
+- Public guard address: matched
+  `0x048eAF1596492cd29378fF240841b8ec32db50eA`
+- Base Sepolia chain: displayed as `84532`
+- Browser console: zero errors and zero warnings
+- Public network before Connect: seven same-origin static requests only
+- Real-wallet workbench evidence: not executed. The initial no-wallet QA failed
+  safely before RPC. A separate refusal-only synthetic EOA pass verified the
+  deployment, prepared exact calldata, simulated it, and rejected at the
+  signature boundary without sending
+- Builder Code integration: observed in reviewed source and automated tests for
+  public code `bc_xiu880fh`
 - Attributed Base Sepolia transaction: **MISSING**
 - Signed Base Sepolia transaction: **MISSING; not required for static hosting**
 

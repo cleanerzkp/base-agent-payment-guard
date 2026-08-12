@@ -13,9 +13,10 @@ form explicitly accepts `No - live on Base testnet`, so a mainnet deployment is
 not a form prerequisite. It requires a project URL, project and builder X and
 Farcaster identities, a grant case of at most 150 words, and a one-minute demo.
 
-The project now has a verified Base Sepolia contract. A public browser release,
-the required social identities, the demo, and the user's review of the form's
-license and privacy terms remain open. The public Builder Code `bc_xiu880fh` is
+The project now has a verified Base Sepolia contract and a reviewed public
+browser release. The required social identities, the demo, and the user's
+review of the form's license and privacy terms remain open. The public Builder
+Code `bc_xiu880fh` is
 registered and integrated into reviewed wallet transaction intents, but its
 first attributed transaction remains unobserved. The up-to-$5,000 intake has
 not been authenticated through an official Base or Coinbase source and requests
@@ -27,7 +28,7 @@ a different live-product evidence set.
 | --- | --- | --- |
 | Email and nominator name | Personal values intentionally absent from the repository | User supplies them only in the authenticated form |
 | Project name | Base Agent Payment Guard | Keep the same name across repository, app, demo, and social profiles |
-| Project URL | Public repository exists; public browser URL is missing | Publish and independently verify the static app before nomination |
+| Project URL | <https://base-agent-payment-guard.vercel.app> | Satisfied; recheck before nomination |
 | Project X | Missing | User creates or confirms the official project profile |
 | Project Farcaster/channel | Missing | User creates or confirms the official project channel |
 | Builder X | Missing | User confirms the builder profile |
@@ -42,10 +43,11 @@ a different live-product evidence set.
 ## Release sequence
 
 1. Complete and review the Base Sepolia wallet workbench and automated gates.
+   **Complete.**
 2. Publish the static browser app with the pinned guard address and security
-   headers.
-3. Independently verify the public page, CSP, chain, contract, token, and
-   transaction intent. Do not perform a real-fund transaction.
+   headers. **Complete.**
+3. Independently verify the public page, headers, artifact hashes, chain,
+   contract, and token display. **Complete.** No wallet transaction was used.
 4. Create or confirm the required project and builder X and Farcaster profiles.
 5. Record a one-minute demo of the observed public release and testnet evidence.
 6. Recheck the 150-word case against the public state.

@@ -12,11 +12,17 @@ to an allowed merchant through a standard ERC-20 allowance.
 ## Status
 
 This repository is an MVP with one Base Sepolia testnet deployment. It is not
-audited, endorsed by Base, or used in production. It has no reported users,
+audited, endorsed by Base, production-ready, or used with real funds or users.
+It has no reported users,
 transaction volume, revenue, attributed Builder Code transaction, or grant
 award. The public Builder Code `bc_xiu880fh` is integrated into the wallet
 transaction intent, but no attributed transaction has been observed. Do not use
 this project with real funds.
+
+The public testnet app is
+<https://base-agent-payment-guard.vercel.app>. It provides the synthetic
+simulator and the reviewed Base Sepolia wallet workbench. The public release is
+testnet-only and does not prove a successful wallet transaction or user.
 
 The reviewed testnet deployment is
 [`0x048eAF1596492cd29378fF240841b8ec32db50eA`](https://sepolia.basescan.org/address/0x048eAF1596492cd29378fF240841b8ec32db50eA).
@@ -32,9 +38,9 @@ The machine-readable evidence is in
 - TypeScript SDK for fail-closed preflight, typed contract requests, trusted-RPC
   receipt verification, and domain-bound aggregate metrics.
 - Standard React web app with a synthetic simulator and an injected-wallet
-  boundary. Treat any Base Sepolia wallet workbench as a separate release
-  surface. Do not describe it as live until its exact read, simulation, and
-  signature flow has passed review on the public deployment.
+  boundary. The public Base Sepolia wallet workbench displays exact transaction
+  intent, simulates before each transaction-send request, and never retries a
+  send.
 
 The pure preflight accepts caller-supplied policy and chain state. It does not
 prove that those values came from one block or remain current. Any future wallet
@@ -141,10 +147,11 @@ item is observed independently.
 
 The official Base Builder Grant nomination accepts projects that are live on
 Base testnet and describes retroactive grants of 1-5 ETH. This project has the
-verified testnet contract, but it is not nomination-ready until it also has an
-observed public product URL, a one-minute demo, and the required project and
-builder social profiles. The separate pasted up-to-$5,000 live-product form has
-not been authenticated from an official source and is not the active path. See
+verified testnet contract and public app, but it is not nomination-ready until
+it also has a one-minute demo, the required project and builder social profiles,
+and the user's review of the form terms. The separate pasted up-to-$5,000
+live-product form has not been authenticated from an official source and is not
+the active path. See
 [`docs/GRANT_READINESS.md`](docs/GRANT_READINESS.md) for the evidence gates and
 [`docs/GRANT_APPLICATION_DRAFT.md`](docs/GRANT_APPLICATION_DRAFT.md) for a
 truthful, non-submittable draft.
@@ -158,6 +165,8 @@ server functions, wallet credentials, or a deployment claim.
 
 The reviewed Base Sepolia deployment identity is hard-pinned in the web source.
 The static build needs no environment variable.
+
+Production URL: <https://base-agent-payment-guard.vercel.app>
 
 Read [`docs/STATIC_HOSTING.md`](docs/STATIC_HOSTING.md) before publishing. A
 hosting dashboard must not contain a private key, seed phrase, wallet password,

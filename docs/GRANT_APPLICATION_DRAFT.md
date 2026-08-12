@@ -13,8 +13,8 @@ privacy, and media-license fields.
 ## Product
 
 - Project name: **Base Agent Payment Guard**
-- Project URL: **MISSING PUBLIC APP URL**. Current public source and evidence:
-  <https://github.com/cleanerzkp/base-agent-payment-guard>
+- Project URL: <https://base-agent-payment-guard.vercel.app>
+- Public source: <https://github.com/cleanerzkp/base-agent-payment-guard>
 - Project X: **MISSING**
 - Project Farcaster/channel: **MISSING**
 - Builder X: **MISSING**
@@ -26,7 +26,7 @@ privacy, and media-license fields.
 
 ## Why this deserves a Base grant
 
-Draft, 92 words:
+Draft, 94 words:
 
 > Base Agent Payment Guard is an open-source, non-custodial policy layer for
 > agentic USDC payments. A wallet owner limits an agent to approved merchants,
@@ -35,8 +35,8 @@ Draft, 92 words:
 > with a TypeScript SDK, browser simulator, reproducible tests, and explicit
 > receipt-verification limits. The project gives Base agent developers a narrow,
 > testable alternative to unrestricted wallet authority. Grant support would
-> fund independent security review, developer pilots, and a careful path from
-> testnet evidence to a reviewed public release.
+> fund independent contract review, developer pilots, measured integrations,
+> and a careful path from testnet evidence to a reviewed mainnet decision.
 
 Recount the final text and recheck every statement immediately before
 submission. Do not add adoption or production claims without evidence.

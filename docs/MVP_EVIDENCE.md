@@ -2,9 +2,10 @@
 
 Status date: 2026-08-12
 
-This file records observed repository and Base Sepolia evidence. It does not
-claim a public browser release, wallet transaction flow, audit, users, volume,
-revenue, Builder Code attribution, grant eligibility, or Base endorsement.
+This file records observed repository, Base Sepolia, and public static-host
+evidence. It does not claim a successful wallet transaction, audit, users,
+volume, revenue, Builder Code attribution, grant eligibility, or Base
+endorsement.
 
 ## Environment
 
@@ -43,6 +44,38 @@ was executed, or that the project has a user.
 The code is public ERC-8021 attribution metadata. It is not a credential and
 does not prove a transaction, user, impact, endorsement, or award.
 
+## Public browser release evidence
+
+- Production URL: <https://base-agent-payment-guard.vercel.app>
+- Vercel deployment: `dpl_3gqP92qf2hA38PpEq7LJ3sdUmgMj`
+- Reviewed implementation commit: `25e7194807cee180fcd5afca0fc53544f7c8634f`
+- Deployment state: `READY`, production target
+- Public HTML SHA-256:
+  `eb6f865b75e43dc9c4ebbbfe360d3e6368b5e2725e3d5f75fc335064994c62c5`
+- Public main JavaScript SHA-256:
+  `0f545c5036bc32713347f781b63c2c2ec426696c1bf49084f6c3c7022b155b02`
+- Public CSS SHA-256:
+  `9f012258dee5c199b9937232281d0119b0fa2ba93c8f7e61b2df44f3f0fb47bf`
+- The three public hashes matched the local reviewed production build.
+- CSP, permissions policy, no-referrer, nosniff, frame denial, and HSTS were
+  observed on the public response.
+- Desktop and 390-by-844 browser checks passed with zero console messages.
+- Before explicit wallet connection, the page made only seven same-origin
+  static requests. With no injected wallet, Connect failed safely without an
+  RPC or transaction request.
+
+No wallet was injected during the initial public QA pass. That pass therefore
+does not claim a successful onchain read, simulation, signature, receipt, user,
+or attributed transaction.
+
+A separate public QA pass injected a synthetic refusal-only EOA provider with
+no key. It verified the pinned guard code, immutable token, and Base Sepolia
+chain through `https://sepolia.base.org`, prepared a configure-policy request,
+displayed the exact ERC-8021 suffix and final calldata, simulated at a fresh
+block, and reached the single signature boundary. The synthetic provider then
+returned user rejection; the page reported that no transaction was sent.
+No signature, hash, receipt, state change, user, or attribution is claimed.
+
 ## Contract evidence
 
 - Base mainnet and Base Sepolia deployment gates.
@@ -73,8 +106,8 @@ after any change and update this count only from observed output.
 - Injected-wallet workbench for explicit Base Sepolia testnet writes. It
   verifies the pinned deployment, reviews exact calldata and attribution,
   simulates at a fresh block, and never retries a send.
-- The wallet workbench is not proof of a public release or successful
-  transaction. Those require separate hosting and onchain evidence.
+- The public wallet workbench is not proof of a successful transaction. That
+  requires separate user authorization and onchain evidence.
 - Clean dependency install from the committed lock with lifecycle scripts
   disabled.
 - Strict runtime-type, uint-width, address, reference, receipt-origin, receipt-ID,
@@ -86,9 +119,9 @@ completed, then `npm run check:all` passed with 34 SDK tests, 40 web tests, both
 TypeScript typechecks and production builds, 28 Solidity tests, Solidity format,
 offline contract build, and contract size checks. Previously recorded browser
 checks passed for the allowed path, self-payment denial, invalid-expiry failure,
-and visible Rule ID diagnostics. At 390 by 844 CSS pixels, document width
-remained 390 pixels and the primary button measured 52 pixels. The final console
-contained zero errors and zero warnings.
+and visible Rule ID diagnostics. At 390 by 844 CSS pixels, document width did
+not exceed the viewport. The public browser console contained zero errors and
+zero warnings.
 
 Accepted screenshots:
 
